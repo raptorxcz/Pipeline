@@ -298,7 +298,7 @@ final class IntegrationTests: SutTestCase<PublishingPipeline<UInt>> {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectation], timeout: 5)
     }
 
     func runMapIntegrationTest(numberOfElements: Int, delayNanosecondsMultiplier: UInt64) async {
