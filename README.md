@@ -11,25 +11,39 @@ We've found [CQRS](https://martinfowler.com/bliki/CQRS.html) to be extremely hel
 
 ## Usage
 
+### Create pipeline
+
 ```swift
 class Storage {
 	let pipeline = PublishingPipeline<Int>(value: 0)
 }
+```
 
-// Getting value from pipeline
-let storage = Storage()
+### Getting value from pipeline
+
+```swift
 let value = await stoage.pipeline.value()
+```
 
-// Chaining operators
-class Sample {
-	...
-	
-	func getNewValue() -> any Pipeline<Int> {
-		return storage.pipeline.map { $0 + 42 }
-	}
+### Mapping value
+
+```swift
+func getNewValue() -> any Pipeline<Int> {
+	return storage.pipeline.map { $0 + 42 }
 }
+```
 
-// Sinking values
+### Merging multiple pipelines
+
+```swift
+func getNewValue() -> any Pipeline<Int> {
+	return storage.pipeline.merge(with: anotherPipeline) { $0 + $1 + 42 }
+}
+```
+
+### Sinking  values and storing pipeline
+
+```swift
 class Sample {
 	private var runningPipelines = [SinkedPipeline]()
 	...
