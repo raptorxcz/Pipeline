@@ -10,5 +10,38 @@ We've found [CQRS](https://martinfowler.com/bliki/CQRS.html) to be extremely hel
 **Combine** operators only accept synchronous closures. Calling asynchronous swift functions is not possible, and adding support proves difficult in some edge cases; for instance, using `Future` to synchronize multiple calls in `map` may mess up element order, and so on. Also, mixing two different level abstractions (Swift concurrency for _commands_ and Combine framework for _queries_) to implement one principle feels rough around the edges.
 
 ## Usage
-TODO:
 
+```swift
+class Storage {
+	let pipeline = PublishingPipeline<Int>(value: 0)
+}
+
+// Getting value from pipeline
+let storage = Storage()
+let value = await stoage.pipeline.value()
+
+// Chaining operators
+class Sample {
+	...
+	
+	func getNewValue() -> any Pipeline<Int> {
+		return storage.pipeline.map { $0 + 42 }
+	}
+}
+
+// Sinking values
+class Sample {
+	private var runningPipelines = [SinkedPipeline]()
+	...
+	
+	func getNewValue() -> any Pipeline<Int> {
+		return storage.pipeline.sink { [weak self] value in
+			await self?.handleUpdate(value)
+		}.store(in: &runningPipelines)
+	}
+	
+	func handleUpdate(_ value: Int) async {
+		...
+	}
+}
+```
