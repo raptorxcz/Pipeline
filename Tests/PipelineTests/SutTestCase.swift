@@ -10,8 +10,4 @@ import XCTest
 
 open class SutTestCase<T>: XCTestCase {
     var sut: T!
-
-    override open func tearDown() {
-        super.tearDown()
-    }
 }

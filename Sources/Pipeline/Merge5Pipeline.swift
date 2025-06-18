@@ -1,4 +1,4 @@
-public final class Merge5Pipeline<Value, Source1, Source2, Source3, Source4, Source5>: Pipeline {
+public final class Merge5Pipeline<Value: Sendable, Source1: Sendable, Source2: Sendable, Source3: Sendable, Source4: Sendable, Source5: Sendable>: Pipeline {
     // strong reference to sources Pipelines
     // This is holding whole pipelines stack.
     // If this is released then whole pipelines stack is released
@@ -7,8 +7,8 @@ public final class Merge5Pipeline<Value, Source1, Source2, Source3, Source4, Sou
     private let source3: any Pipeline<Source3>
     private let source4: any Pipeline<Source4>
     private let source5: any Pipeline<Source5>
-    private let merge: (Source1, Source2, Source3, Source4, Source5) async -> Value
-    private var subscriptions = PipelineContext<Value>()
+    private let transform: @Sendable (Source1, Source2, Source3, Source4, Source5) async -> Value
+    private let subscribers = PipelineSubscribers<Value>()
 
     init(
         source1: any Pipeline<Source1>,
@@ -16,46 +16,41 @@ public final class Merge5Pipeline<Value, Source1, Source2, Source3, Source4, Sou
         source3: any Pipeline<Source3>,
         source4: any Pipeline<Source4>,
         source5: any Pipeline<Source5>,
-        subscription1: any PipelineSubscription<Source1>,
-        subscription2: any PipelineSubscription<Source2>,
-        subscription3: any PipelineSubscription<Source3>,
-        subscription4: any PipelineSubscription<Source4>,
-        subscription5: any PipelineSubscription<Source5>,
-        merge: @escaping (Source1, Source2, Source3, Source4, Source5) async -> Value
+        transform: @Sendable @escaping (Source1, Source2, Source3, Source4, Source5) async -> Value
     ) async {
         self.source1 = source1
         self.source2 = source2
         self.source3 = source3
         self.source4 = source4
         self.source5 = source5
-        self.merge = merge
-        await subscription1.addSubscription(listener: self) { [weak self] value in
-            await self?.publish(value1: value, value2: source2.value(), value3: source3.value(), value4: source4.value(), value5: source5.value())
+        self.transform = transform
+        await source1.getSubscribers().addSubscriber(self) { [weak self] value in
+            await self?.notify(value1: value, value2: source2.getValue(), value3: source3.getValue(), value4: source4.getValue(), value5: source5.getValue())
         }
-        await subscription2.addSubscription(listener: self) { [weak self] value in
-            await self?.publish(value1: source1.value(), value2: value, value3: source3.value(), value4: source4.value(), value5: source5.value())
+        await source2.getSubscribers().addSubscriber(self) { [weak self] value in
+            await self?.notify(value1: source1.getValue(), value2: value, value3: source3.getValue(), value4: source4.getValue(), value5: source5.getValue())
         }
-        await subscription3.addSubscription(listener: self) { [weak self] value in
-            await self?.publish(value1: source1.value(), value2: source2.value(), value3: value, value4: source4.value(), value5: source5.value())
+        await source3.getSubscribers().addSubscriber(self) { [weak self] value in
+            await self?.notify(value1: source1.getValue(), value2: source2.getValue(), value3: value, value4: source4.getValue(), value5: source5.getValue())
         }
-        await subscription4.addSubscription(listener: self) { [weak self] value in
-            await self?.publish(value1: source1.value(), value2: source2.value(), value3: source3.value(), value4: value, value5: source5.value())
+        await source4.getSubscribers().addSubscriber(self) { [weak self] value in
+            await self?.notify(value1: source1.getValue(), value2: source2.getValue(), value3: source3.getValue(), value4: value, value5: source5.getValue())
         }
-        await subscription5.addSubscription(listener: self) { [weak self] value in
-            await self?.publish(value1: source1.value(), value2: source2.value(), value3: source3.value(), value4: source4.value(), value5: value)
+        await source5.getSubscribers().addSubscriber(self) { [weak self] value in
+            await self?.notify(value1: source1.getValue(), value2: source2.getValue(), value3: source3.getValue(), value4: source4.getValue(), value5: value)
         }
     }
 
-    public func value() async -> Value {
-        return await merge(source1.value(), source2.value(), source3.value(), source4.value(), source5.value())
+    public func getValue() async -> Value {
+        return await transform(source1.getValue(), source2.getValue(), source3.getValue(), source4.getValue(), source5.getValue())
     }
 
-    private func publish(value1: Source1, value2: Source2, value3: Source3, value4: Source4, value5: Source5) async {
-        let newValue = await merge(value1, value2, value3, value4, value5)
-        await subscriptions.publish(value: newValue)
+    private func notify(value1: Source1, value2: Source2, value3: Source3, value4: Source4, value5: Source5) async {
+        let newValue = await transform(value1, value2, value3, value4, value5)
+        await subscribers.notify(with: newValue)
     }
 
-    public func getContext() -> PipelineContext<Value> {
-        return subscriptions
+    public func getSubscribers() async -> PipelineSubscribers<Value> {
+        return subscribers
     }
 }

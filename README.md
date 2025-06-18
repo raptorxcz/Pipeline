@@ -22,7 +22,7 @@ class Storage {
 ### Getting value from pipeline
 
 ```swift
-let value = await stoage.pipeline.value()
+let value = await stoage.pipeline.getValue()
 ```
 
 ### Mapping value

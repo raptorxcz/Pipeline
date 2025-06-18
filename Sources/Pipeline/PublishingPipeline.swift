@@ -6,24 +6,24 @@
 //  Copyright © 2023 Cleverlance. All rights reserved.
 //
 
-public actor PublishingPipeline<Value>: Pipeline {
+public actor PublishingPipeline<Value: Sendable>: Pipeline {
     private var lastValue: Value
-    private let subscriptions = PipelineContext<Value>()
+    private let subscribers = PipelineSubscribers<Value>()
 
     public init(value: Value) {
         lastValue = value
     }
 
-    public func publish(value: Value) async {
+    public func notify(value: Value) async {
         lastValue = value
-        await subscriptions.publish(value: value)
+        await subscribers.notify(with: value)
     }
 
-    public func value() async -> Value {
+    public func getValue() async -> Value {
         return lastValue
     }
 
-    public func getContext() -> PipelineContext<Value> {
-        return subscriptions
+    public func getSubscribers() async -> PipelineSubscribers<Value> {
+        return subscribers
     }
 }
