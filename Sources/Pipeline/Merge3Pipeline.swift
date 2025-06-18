@@ -1,11 +1,3 @@
-//
-//  Merge3Pipeline.swift
-//  Imos
-//
-//  Created by Kryštof Matěj on 01.06.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 public final class Merge3Pipeline<Value: Sendable, Source1: Sendable, Source2: Sendable, Source3: Sendable>: Pipeline {
     // strong reference to sources Pipelines
     // This is holding whole pipelines stack.
@@ -38,7 +30,7 @@ public final class Merge3Pipeline<Value: Sendable, Source1: Sendable, Source2: S
     }
 
     public func getValue() async -> Value {
-        return await transform(source1.getValue(), source2.getValue(), source3.getValue())
+        await transform(source1.getValue(), source2.getValue(), source3.getValue())
     }
 
     private func notify(value1: Source1, value2: Source2, value3: Source3) async {
@@ -47,6 +39,6 @@ public final class Merge3Pipeline<Value: Sendable, Source1: Sendable, Source2: S
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }

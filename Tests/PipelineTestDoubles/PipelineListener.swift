@@ -1,11 +1,3 @@
-//
-//  PipelineListener.swift
-//  Imos
-//
-//  Created by Libor Huspenina on 26.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 import Pipeline
 
 @MainActor

@@ -1,11 +1,3 @@
-//
-//  PublishingPipeline.swift
-//  Shared
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 public actor PublishingPipeline<Value: Sendable>: Pipeline {
     private var lastValue: Value
     private let subscribers = PipelineSubscribers<Value>()
@@ -20,10 +12,10 @@ public actor PublishingPipeline<Value: Sendable>: Pipeline {
     }
 
     public func getValue() async -> Value {
-        return lastValue
+        lastValue
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }

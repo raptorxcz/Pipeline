@@ -1,11 +1,3 @@
-//
-//  SinkPipeline.swift
-//  Shared
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 public actor SinkedPipelinesStorage {
     private var pipelines = [Sendable]()
 

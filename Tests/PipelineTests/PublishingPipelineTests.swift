@@ -1,11 +1,3 @@
-//
-//  PublishingPipelineTests.swift
-//  PipelineTests
-//
-//  Created by Kryštof Matěj on 08.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 @testable import Pipeline
 import PipelineTestDoubles
 import XCTest

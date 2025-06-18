@@ -1,11 +1,3 @@
-//
-//  PipelineSpy.swift
-//  SharedTests
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 @testable import Pipeline
 import XCTest
 
@@ -29,6 +21,6 @@ public final class PipelineSpy<Value: Sendable>: Pipeline {
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }

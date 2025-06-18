@@ -25,7 +25,7 @@ public actor PipelineSubscribers<Value: Sendable> {
 
     private func removeDeadSubscribers() {
         let newSubscribers = subscribers.filter { subscriber in
-            return subscriber.entity != nil
+            subscriber.entity != nil
         }
         subscribers = newSubscribers
     }

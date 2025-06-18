@@ -142,7 +142,7 @@ final class Merge5PipelineTests: XCTestCase {
             source4: source4,
             source5: source5,
             transform: {
-                return $0 + $1 + $2 + $3 + $4
+                $0 + $1 + $2 + $3 + $4
             }
         )
 

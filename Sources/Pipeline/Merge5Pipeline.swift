@@ -42,7 +42,7 @@ public final class Merge5Pipeline<Value: Sendable, Source1: Sendable, Source2: S
     }
 
     public func getValue() async -> Value {
-        return await transform(source1.getValue(), source2.getValue(), source3.getValue(), source4.getValue(), source5.getValue())
+        await transform(source1.getValue(), source2.getValue(), source3.getValue(), source4.getValue(), source5.getValue())
     }
 
     private func notify(value1: Source1, value2: Source2, value3: Source3, value4: Source4, value5: Source5) async {
@@ -51,6 +51,6 @@ public final class Merge5Pipeline<Value: Sendable, Source1: Sendable, Source2: S
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }

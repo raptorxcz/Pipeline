@@ -1,11 +1,3 @@
-//
-//  Merge4PipelineTests.swift.swift
-//  SharedTests
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 @testable import Pipeline
 import PipelineTestDoubles
 import XCTest
@@ -115,7 +107,7 @@ final class Merge4PipelineTests: XCTestCase {
             source3: source3,
             source4: source4,
             transform: {
-                return $0 + $1 + $2 + $3
+                $0 + $1 + $2 + $3
             }
         )
 

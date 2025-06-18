@@ -22,7 +22,7 @@ let package = Package(
         ),
         .target(
             name: "PipelineTestDoubles",
-            dependencies: ["Pipeline"], 
+            dependencies: ["Pipeline"],
             path: "Tests/PipelineTestDoubles"
         ),
         .testTarget(

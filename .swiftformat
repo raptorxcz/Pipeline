@@ -1,0 +1,94 @@
+--swiftversion 5.10
+--rules anyObjectProtocol
+--rules assertionFailures
+--rules blankLineAfterImports
+--rules blankLinesAroundMark
+--rules blankLinesAtEndOfScope
+--rules blankLinesAtEndOfScope
+--rules blankLinesBetweenChainedFunctions
+--rules blankLinesBetweenImports
+--rules blockComments
+--rules braces
+--rules consecutiveBlankLines
+--rules consecutiveSpaces
+--rules duplicateImports
+--rules elseOnSameLine
+--rules emptyBraces
+--rules enumNamespaces
+--rules extensionAccessControl
+--rules genericExtensions
+--rules hoistAwait
+--rules hoistPatternLet
+--rules hoistTry
+--rules indent
+--rules initCoderUnavailable
+--rules isEmpty
+--rules leadingDelimiters
+--rules linebreakAtEndOfFile
+--rules linebreaks
+--rules modifierOrder
+--rules noExplicitOwnership
+--rules numberFormatting
+--rules opaqueGenericParameters
+--rules redundantBackticks
+--rules redundantBreak
+--rules redundantClosure
+--rules redundantExtensionACL
+--rules redundantFileprivate
+--rules redundantGet
+--rules redundantInit
+--rules redundantInternal
+--rules redundantLet
+--rules redundantLetError
+--rules redundantNilInit
+--rules redundantOptionalBinding
+--rules redundantParens
+--rules redundantPattern
+--rules redundantProperty
+--rules redundantReturn
+--rules redundantStaticSelf
+--rules redundantVoidReturnType
+--rules semicolons
+--rules sortImports
+--rules sortSwitchCases
+--rules spaceAroundBraces
+--rules spaceAroundBrackets
+--rules spaceAroundGenerics
+--rules spaceAroundOperators
+--rules spaceInsideBraces
+--rules spaceInsideBrackets
+--rules spaceInsideComments
+--rules spaceInsideGenerics
+--rules spaceInsideParens
+--rules strongifiedSelf
+--rules todos
+--rules trailingCommas
+--rules trailingSpace
+--rules typeSugar
+--rules unusedArguments
+--rules void
+--rules wrapArguments
+--rules wrapEnumCases
+--rules yodaConditions
+--rules fileHeader
+--header strip
+
+# Config of blankLinesAroundMark
+--lineaftermarks false
+
+# Config of indent
+--ifdef no-indent
+
+# Config of numberFormatting
+--decimalgrouping 3,0
+
+# Config of spaceAroundOperators
+--ranges no-space
+
+# Config of trailingCommas
+--commas inline
+
+# Config of wrapArguments
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first

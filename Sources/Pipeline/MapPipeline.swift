@@ -1,11 +1,3 @@
-//
-//  MapPipeline.swift
-//  Shared
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 public final class MapPipeline<Value: Sendable, Source: Sendable>: Pipeline {
     // strong reference to sources Pipelines
     // This is holding whole pipelines stack.wow
@@ -26,7 +18,7 @@ public final class MapPipeline<Value: Sendable, Source: Sendable>: Pipeline {
     }
 
     public func getValue() async -> Value {
-        return await transform(source.getValue())
+        await transform(source.getValue())
     }
 
     private func notify(value: Source) async {
@@ -35,6 +27,6 @@ public final class MapPipeline<Value: Sendable, Source: Sendable>: Pipeline {
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }

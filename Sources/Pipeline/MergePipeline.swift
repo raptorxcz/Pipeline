@@ -1,11 +1,3 @@
-//
-//  MergePipeline.swift
-//  Shared
-//
-//  Created by Kryštof Matěj on 03.05.2023.
-//  Copyright © 2023 Cleverlance. All rights reserved.
-//
-
 public final class MergePipeline<Value: Sendable, Source1: Sendable, Source2: Sendable>: Pipeline {
     // strong reference to sources Pipelines
     // This is holding whole pipelines stack.
@@ -32,7 +24,7 @@ public final class MergePipeline<Value: Sendable, Source1: Sendable, Source2: Se
     }
 
     public func getValue() async -> Value {
-        return await transform(source1.getValue(), source2.getValue())
+        await transform(source1.getValue(), source2.getValue())
     }
 
     private func notify(value1: Source1, value2: Source2) async {
@@ -41,6 +33,6 @@ public final class MergePipeline<Value: Sendable, Source1: Sendable, Source2: Se
     }
 
     public func getSubscribers() async -> PipelineSubscribers<Value> {
-        return subscribers
+        subscribers
     }
 }
